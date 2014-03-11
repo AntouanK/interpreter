@@ -1,0 +1,15 @@
+<html ng-app="myApp">
+<head>
+	<title>interpreter.js - Angular.js i18n/l10n</title>
+</head>
+<body ng-controller="mainCtrl">
+	<button ng-click="setLang('lang.en-UK.json');">EN</button>
+	<button ng-click="setLang('lang.gr-GR.json');">GR</button>
+
+	<p>{{keyword.HELLO}} {{keyword.WORLD}}</p>
+
+	<script type="text/javascript" src="http://code.angularjs.org/1.2.14/angular.min.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="src/interpreter.js"></script>
+</body>
+</html>
