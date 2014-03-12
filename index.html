@@ -1,13 +1,39 @@
 <html ng-app="myApp">
 <head>
 	<title>interpreter.js - Angular.js i18n/l10n</title>
+	<link href='http://fonts.googleapis.com/css?family=Oxygen:300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+	<link rel="stylesheet" href="main.css">
 </head>
-<body ng-controller="mainCtrl">
-	<button ng-click="setLang('lang.en-UK.json');">EN</button>
-	<button ng-click="setLang('lang.gr-GR.json');">GR</button>
+<body ng-controller="mainCtrl" ng-cloaky>
+	<div class="header">
+		<h1>interpreter</h1>
+		<h2>i18n/l10n service for AngularJS</h2>
+	</div>
+	<div class="main-menu-wrapper">
+		<div class="pure-menu pure-menu-open pure-menu-horizontal main-menu" ng-class="mainMenuClass">
+		    <ul>
+		        <li ng-repeat="m in mainMenu" ng-class="m.class">
+		        	<a href="{{m.href}}" ng-click="m.click(m);">{{m.text}}</a>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+	<div class="content">
+		<!-- splash screen -->
+		<div class="splash-wrapper" ng-if="splash">
+			<div>
+				<h2 ng-click="tryIt();">Try it</h2>
+			</div>
+		</div>
 
-	<p>{{keyword.HELLO}} {{keyword.WORLD}}</p>
-
+		<!-- set language view -->
+		<div ng-show="setLanguageView">
+			set your language
+		</div>
+	</div>
+	
+	<!-- scripts -->
 	<script type="text/javascript" src="http://code.angularjs.org/1.2.14/angular.min.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 	<script type="text/javascript" src="src/interpreter.js"></script>
