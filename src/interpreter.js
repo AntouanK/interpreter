@@ -15,6 +15,7 @@
 		    	Object.keys(newLangData)
 		    	.every(function(key) {
 		    		langDictionary[key] = newLangData[key];	//	we assign the new string to the current 'word'
+		    		return true;
 		    	});
 		    };
 
