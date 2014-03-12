@@ -34,10 +34,14 @@ body {
 	        transition-duration: 300ms;
 
 	-webkit-transform-origin: top;
+	   -moz-transform-origin: top;
+	        transform-origin: top;
 }
 
 .main-menu.closed {
 	-webkit-transform: rotateX(-90deg);
+	   -moz-transform: rotateX(-90deg);
+	        transform: rotateX(-90deg);
 }
 
 .main-menu-wrapper {
