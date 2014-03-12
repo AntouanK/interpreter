@@ -64,3 +64,8 @@ body {
 	padding: 20px 0;
 	cursor: pointer;
 }
+
+.mainView {
+	max-width: 980px;
+	margin: 0 auto;
+}

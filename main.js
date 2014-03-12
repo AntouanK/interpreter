@@ -9,32 +9,35 @@
 			interpreter.setLang(url);
 		};
 
-		var currentActiveMenu
-			,setActiveMenu = function(menu){
+		var currentActiveMenu,
+			setActiveMenu = function(menu){
 
 				if(currentActiveMenu !== undefined){
 					currentActiveMenu.class = '';
 				}
 				currentActiveMenu = menu;
 				menu.class = "pure-menu-selected";
+
+				//	set view active
+				$scope.activeView = menu.view;
 			};
 
 		$scope.mainMenu = [
 			{
 				text: 'Set language',
-				href: '#/setLanguage',
+				view: 'setLanguage',
 				click: setActiveMenu,
 				class: ''
 			},
 			{
 				text: 'Sample language files',
-				href: '#/sampleLanguageFiles',
+				view: 'sampleLanguageFiles',
 				click: setActiveMenu,
 				class: ''
 			},
 			{
 				text: 'Add a new language',
-				href: '#/addNewLanguage',
+				view: 'addNewLanguage',
 				click: setActiveMenu,
 				class: ''
 			},
