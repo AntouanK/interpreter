@@ -1,3 +1,8 @@
+@font-face {
+	font-family: 'Oxygen';
+	src: url(oxygen.300.woff);
+}
+
 body {
 	margin: 0;
 	padding: 0;
