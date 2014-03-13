@@ -1,0 +1,28 @@
+{
+  "name": "interpreter",
+  "version": "0.1.0",
+  "description": "An Angular.js service, for handling i18n and translation to different languages.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AntouanK/interpreter.git"
+  },
+  "keywords": [
+    "angularjs",
+    "i18n",
+    "l10n"
+  ],
+  "author": "Antonis Karamitros @antouank",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AntouanK/interpreter/issues"
+  },
+  "homepage": "https://github.com/AntouanK/interpreter",
+  "dependencies": {
+    "consologger": "~0.1.41",
+    "gulp": "~3.5.6"
+  }
+}
