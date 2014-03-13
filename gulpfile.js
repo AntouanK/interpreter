@@ -1,5 +1,6 @@
 
-var gulp = require('gulp');
+var gulp   = require('gulp'),
+    mocha  = require('gulp-mocha');
 
 gulp.task('build', function(){
 
@@ -8,5 +9,6 @@ gulp.task('build', function(){
 
 gulp.task('test', function(){
 
-    console.log('test');
+    gulp.src('test/test.js')
+        .pipe(mocha({reporter: 'nyan'}));
 });
