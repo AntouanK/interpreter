@@ -40,8 +40,8 @@
 				view: 'addNewLanguage',
 				click: setActiveMenu,
 				class: ''
-			},
-		]
+			}
+		];
 
 		$scope.keyword = interpreter.map;
 
@@ -49,13 +49,10 @@
 		$scope.mainMenuClass = 'closed';
 
 		$scope.tryIt = function(){
-		
+
 			$scope.mainMenuClass = '';
 			$scope.splash = false;
 		};
 	}]);
 
 }());
-
-
-
