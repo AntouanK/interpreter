@@ -81,6 +81,6 @@ gulp.task('build', ['copyStyleFiles', 'copyJsFiles', 'copyHtmlFiles', 'copyResou
 
 gulp.task('test', function(){
 
-    gulp.src('dev/test/test.js')
-        .pipe(mocha({reporter: 'list'}));
+    // gulp.src('dev/test/test.js')
+    //     .pipe(mocha({reporter: 'list'}));
 });
