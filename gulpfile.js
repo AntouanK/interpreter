@@ -9,6 +9,6 @@ gulp.task('build', function(){
 
 gulp.task('test', function(){
 
-    gulp.src('test/test.js')
-        .pipe(mocha({reporter: 'nyan'}));
+    gulp.src('dev/test/test.js')
+        .pipe(mocha({reporter: 'list'}));
 });
