@@ -6,7 +6,7 @@
 
 	angular.module('myApp')	//	your app here
 	.service('interpreter', ['$http', function($http) {
-		
+
 		var langDictionary = {},	// the main hash map we keep all our current translations
 		    langCache      = {},	// we cache here the different language dictionaries
 		    //	a function which does the rewrite of the new words whenever we get a new language
@@ -14,15 +14,25 @@
 
 		    	Object.keys(newLangData)
 		    	.every(function(key) {
-		    		langDictionary[key] = newLangData[key];	//	we assign the new string to the current 'word'
-		    		return true;
+					
+		    		//	if property is read-only, unlock it
+					if(langDictionary[key] !== undefined){
+						Object.defineProperty(langDictionary, key, { writable: true });
+					}
+
+					//	write the new keywords ( all bindings on it will be pointing to the new value )
+					langDictionary[key] = newLangData[key];
+
+					//	make keyword read only, no one should try to write on it ( will throw error if he does! )
+					Object.defineProperty(langDictionary, key, { writable: false });
+					return true;
 		    	});
 		    };
 
 		this.ignoreCache = false;	// we use the cache by default, but you can turn it off
 
 		this.setLang = function(url, callback) {
-			
+
 			if(typeof url !== 'string'){
 				return false;
 			}
@@ -55,7 +65,7 @@
 
 		//	expose the dictionary hashmap so you can bind on it
 		this.map = langDictionary;
-		
+
 	}]);
 
 }());
