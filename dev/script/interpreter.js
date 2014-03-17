@@ -4,9 +4,9 @@
 
 	'use strict';
 
-	angular.module('myApp')	//	your app here
+	angular.module('inApp')	//	your app here
 	.service('interpreter', ['$http', function($http) {
-		
+
 		var langDictionary = {},	// the main hash map we keep all our current translations
 		    langCache      = {},	// we cache here the different language dictionaries
 		    //	a function which does the rewrite of the new words whenever we get a new language
@@ -22,7 +22,7 @@
 		this.ignoreCache = false;	// we use the cache by default, but you can turn it off
 
 		this.setLang = function(url, callback) {
-			
+
 			if(typeof url !== 'string'){
 				return false;
 			}
@@ -55,7 +55,7 @@
 
 		//	expose the dictionary hashmap so you can bind on it
 		this.map = langDictionary;
-		
+
 	}]);
 
 }());

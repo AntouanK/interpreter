@@ -1,24 +1,21 @@
-<html ng-app="myApp">
+<html ng-app="inApp">
 <head>
 	<title>interpreter.js - Angular.js i18n/l10n</title>
-
 	<link rel="stylesheet" href="style/main.css">
 </head>
-<body ng-controller="mainCtrl" ng-cloaky>
+<body ng-controller="mainCtrl" ng-cloak>
+	<!-- header -->
 	<div class="header">
 		<h1>interpreter</h1>
 		<h2>i18n/l10n service for AngularJS</h2>
 	</div>
-	<div class="main-menu-wrapper">
-		<div class="pure-menu pure-menu-open pure-menu-horizontal main-menu" ng-class="mainMenuClass">
-		    <ul>
-		        <li ng-repeat="m in mainMenu" ng-class="m.class">
-		        	<a href ng-click="m.click(m);">{{m.text}}</a>
-		        </li>
-		    </ul>
-		</div>
-	</div>
+
+	<!-- horizontal menu component -->
+	<horMenu horMenuData="" />
+
+	<!-- main content -->
 	<div class="content">
+
 		<!-- splash screen -->
 		<div class="splash-wrapper" ng-if="splash">
 			<div>
