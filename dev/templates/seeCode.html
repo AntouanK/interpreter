@@ -1,0 +1,47 @@
+<div class="pure-g">
+	<div class="pure-u-1-1" style="margin: auto 0;">
+		<p>
+			So, we already made our two language files, <code>lang.en-UK.json</code> and <code>lang.el-GR.json</code>.<br />
+			Now, in our app, we include the 'interpreter' service.
+			<div class="highlight highlight-js">
+				<pre>var myApp = angular.module('myApp', []);
+
+myApp.controller('myCtrl', ['$scope', 'interpreter', function($scope, interpreter){
+
+	// so now interpreter is available
+	// let's add english ( and when file is downloaded, make it active )
+	interpreter.addLang('en-UK', 'languages/lang.en-UK.json', function(){
+		interpreter.setLang('en-UK');
+	});
+	// let's also get greek
+	interpreter.addLang('el-GR', 'languages/lang.el-GR.json');
+
+	// we can bind a local variable to the available keyword map
+	$scope.keyword = interpreter.map;
+
+	// that's it, done
+	// if we want to switch to greek, we just do: interpreter.setLang('el-GR');
+	// that's what the buttons below do
+}]);
+				</pre>
+
+			</div>
+			<div class="pure-g">
+				<div class="pure-u-1-2">
+					<h4>let's write our view with bindings to the controller<br />( keyword has the mappings )</h4>
+
+					<textarea rows="3" cols="30" ng-model="howToCode.textArea"></textarea>
+				</div>
+				<div class="pure-u-1-2">
+					<div>
+						<h4>Switch languages on runtime
+							<button class="pure-button" ng-click="howToCode.switchLang('en-UK')">en-UK</button>
+							<button class="pure-button" ng-click="howToCode.switchLang('el-GR')">el-GR</button>
+						</h4>
+					</div>
+					<div class="code" compile="howToCode.textArea"></div>
+				</div>
+			</div>
+		</p>
+	</div>
+</div>

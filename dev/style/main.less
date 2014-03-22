@@ -1,4 +1,9 @@
 @import (less) './pure-min.css';
+
+@white1: #f3f3f3;
+@grey1: #333;
+@greenDark: #48695f;
+
 @import './horMenu.less';
 @import './editor.less';
 
@@ -7,16 +12,17 @@
 	src: url(oxygen.300.woff);
 }
 
-body {
+body, div, p, span {
 	margin: 0;
 	padding: 0;
 	font-family: 'Oxygen';
-	color: #666;
+	color: @grey1;
 }
 
 .header {
 	text-align: center;
-	background: #f3f3f3;
+	background: @grey1;
+	color: @white1;
 	margin: 0 auto;
 	padding: 30px 0;
 	-webkit-font-smoothing: antialiased;
@@ -24,18 +30,37 @@ body {
 }
 
 #content-wrapper {
-	background: #333;
+	background: @white1;
+	color: @grey1;
 	position: absolute;
 	bottom: 0;
 	right: 0;
 	left: 0;
 	top: 236px;
-	padding-top: 50px;
+	padding: 50px 15px;
 	overflow: auto;
+
+	font-family: 'Oxygen';
 }
 
-#content {
+code {
+	margin: 0;
+	border: 1px solid @grey1;
+	border-radius: 3px;
+	white-space: nowrap;
+	display: inline-block;
+	overflow: auto;
+	//font-family: 'Oxygen';
+	padding: 2px;
+	line-height: 1.3;
+	vertical-align: middle;
+}
 
+.code {
+	background: #fff;
+	border: 1px solid #333;
+	border-radius: 3px;
+	padding: 5px;
 }
 
 .splash-wrapper {
@@ -43,8 +68,8 @@ body {
 }
 .splash-wrapper h2 {
 	border-radius: 4px;
-	border: 2px solid #fefefe;
-	color: #ededed;
+	border: 2px solid @grey1;
+	color: @grey1;
 	width: 200px;
 	margin: 0 auto;
 	padding: 20px 0;
@@ -54,4 +79,48 @@ body {
 .mainView {
 	max-width: 980px;
 	margin: 0 auto;
+}
+
+.pure-g [class*="pure-u"] {
+	font-family: 'Oxygen';
+}
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none;
 }

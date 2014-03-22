@@ -47,8 +47,9 @@ gulp.task('copyStyleFiles', function(){
 gulp.task('lint', function(){
 
     var filter = gulpFilter([
-        '!angular*',
-		'!bindonce.*'
+		'!angular*',
+		'!bindonce.*',
+		'!md.js'
     ]);
 
     getFiles(jsFilesPaths)

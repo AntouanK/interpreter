@@ -7,11 +7,12 @@
 	angular.module('inApp')
 	.directive('horMenu', ['$timeout', function($timeout){
 
-		var locked = false;
+		var locked = false,
+		    link;
 
-		var link = function(scope, ele, attr){
+		link = function(scope, ele, attr){
 
-			scope.onClick = function(){
+			scope.onMousedown = function(){
 
 				if(!locked){
 					ele.children().children().addClass('closed');
@@ -20,9 +21,13 @@
 					$timeout(function(){
 						ele.children().children().removeClass('closed');
 						locked = false;
-					},300);
+					},200);
 				}
 			};
+
+			scope.$watch('scope.horMenuScope.menu', function(){
+				//
+			});
 		};
 
 		return {

@@ -1,48 +1,96 @@
 ;(function(){
 	'use strict';
 
-	var inApp = angular.module('inApp', ['pasvaz.bindonce']);
+	var escape = document.createElement('textarea');
+	function escapeHTML(html) {
+		escape.innerHTML = html;
+		return escape.innerHTML;
+	}
+
+	var inApp = angular.module('inApp', []);
 
 	inApp.controller('mainCtrl',
-	['$scope', 'interpreter', function($scope, interpreter){
+	['$scope', 'interpreter', '$compile', function($scope, interpreter, $compile){
 
-		$scope.setLang = function(url) {
-			interpreter.setLang(url);
-		};
 
-		var currentActiveMenu,
-			setActiveMenu = function(menu){
+		interpreter.addLang('en-UK', 'languages/lang.en-UK.json', function(){
+			interpreter.setLang('en-UK');
+		});
+		interpreter.addLang('el-GR', 'languages/lang.el-GR.json');
 
-				if(currentActiveMenu !== undefined){
-					currentActiveMenu.class = '';
+		$scope.curActiveView = '';
+		$scope.splash = true;
+
+		var onClickSelection = function(selection){
+
+				$scope.splash = false;
+
+				onClickSelection = function(selection){
+
+					$scope.curActiveView = selection.nextView;
+					// menu.class = "pure-menu-selected";
+
+					$scope.menuScope.menu = eval(selection.nextView.replace(/\/.+/,'')+'Menu');
+				};
+
+				onClickSelection(selection);
+			},
+		    mainMenu = [
+				{
+					text: 'Try it',
+					nextView: 'tryIt/setLang',
+					click: onClickSelection,
+					class: ''
+				},
+				{
+					text: 'Documentation',
+					nextView: 'documentation',
+					click: onClickSelection,
+					class: ''
 				}
-				currentActiveMenu = menu;
-				menu.class = "pure-menu-selected";
-
-				//	set view active
-				$scope.activeView = menu.view;
-			};
+			],
+		    tryItMenu = [
+				{
+					text: ' << ',
+					nextView: 'main',
+					click: onClickSelection,
+					class: ''
+				},
+				{
+					text: 'set Languages',
+					nextView: 'tryIt/setLang',
+					click: onClickSelection,
+					class: ''
+				},
+				{
+					text: 'How to use',
+					click: onClickSelection,
+					nextView: 'tryIt/seeCode',
+					class: ''
+				}
+			],
+			documentationMenu = [
+				{
+					text: ' << ',
+					nextView: 'main',
+					click: onClickSelection,
+					class: ''
+				}
+			];
 
 		$scope.menuScope = {};
-		$scope.menuScope.mainMenu = [
-			{
-				text: 'Try it',
-				view: 'tryIt',
-				click: setActiveMenu,
-				class: ''
-			},
-			{
-				text: 'Documentation',
-				view: 'documentation',
-				click: setActiveMenu,
-				class: ''
-			}
-		];
+		$scope.menuScope.menu = mainMenu;
 
 		$scope.keyword = interpreter.map;
 
-		$scope.splash = true;
-		$scope.mainMenuClass = 'closed';
+		$scope.howToCode = {
+			textArea: '<div>{{keyword.HELLO}}</div>\n<div>{{keyword.WORLD}}!</div>\n<div>{{keyword.DESCRIPTION}}</div>',
+			// viewHtml: '',
+			keyword: interpreter.map,
+			switchLang: function(code){ interpreter.setLang(code); }
+		};
+
+		// $scope.howToCode.viewHtml = $compile($scope.howToCode.textArea)($scope.howToCode);
 
 		$scope.jsonUk = JSON.stringify({
 			"HELLO": "Hello",
@@ -58,8 +106,7 @@
 
 		$scope.tryIt = function(){
 
-			$scope.mainMenuClass = '';
-			$scope.splash = false;
+			mainMenu[0].click(mainMenu[0]);
 		};
 	}]);
 

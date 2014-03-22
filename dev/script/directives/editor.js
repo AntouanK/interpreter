@@ -5,7 +5,7 @@
 	'use strict';
 
 	angular.module('inApp')
-	.directive('editor', ['$timeout', function($timeout){
+	.directive('editor', ['md', function(md){
 
 		var locked = false;
 
@@ -14,7 +14,7 @@
 			if(attr.content !== undefined){
 				var content = attr.content,
 				    json,
-					lines;
+				    lines;
 
 				if(scope.$parent[content] !== undefined){
 					content = scope.$parent[content];
@@ -37,7 +37,7 @@
 				'<div class="bracket">{</div>'+
 				lines
 				.map(function(l){
-					return '<div class="line">'+l+'</div>'
+					return '<div class="line">'+l.replace(/:/g,': ')+'</div>';
 				}).join('')+
 				'<div class="bracket">}</div>';
 
