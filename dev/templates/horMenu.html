@@ -1,0 +1,9 @@
+<div class="main-menu-wrapper">
+	<div class="pure-menu pure-menu-open pure-menu-horizontal main-menu" ng-class="mainMenuClass">
+		<ul>
+			<li ng-repeat="m in horMenuScope.mainMenu" ng-class="m.class">
+				<a href ng-click="onClick(); m.click(m);">{{m.text}}</a>
+			</li>
+		</ul>
+	</div>
+</div>

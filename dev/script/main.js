@@ -1,9 +1,10 @@
 ;(function(){
 	'use strict';
 
-	var myApp = angular.module('myApp', []);
+	var inApp = angular.module('inApp', ['pasvaz.bindonce']);
 
-	myApp.controller('mainCtrl', ['$scope', 'interpreter', function($scope, interpreter){
+	inApp.controller('mainCtrl',
+	['$scope', 'interpreter', function($scope, interpreter){
 
 		$scope.setLang = function(url) {
 			interpreter.setLang(url);
@@ -22,22 +23,17 @@
 				$scope.activeView = menu.view;
 			};
 
-		$scope.mainMenu = [
+		$scope.menuScope = {};
+		$scope.menuScope.mainMenu = [
 			{
-				text: 'Set language',
-				view: 'setLanguage',
+				text: 'Try it',
+				view: 'tryIt',
 				click: setActiveMenu,
 				class: ''
 			},
 			{
-				text: 'Sample language files',
-				view: 'sampleLanguageFiles',
-				click: setActiveMenu,
-				class: ''
-			},
-			{
-				text: 'Add a new language',
-				view: 'addNewLanguage',
+				text: 'Documentation',
+				view: 'documentation',
 				click: setActiveMenu,
 				class: ''
 			}
@@ -47,6 +43,18 @@
 
 		$scope.splash = true;
 		$scope.mainMenuClass = 'closed';
+
+		$scope.jsonUk = JSON.stringify({
+			"HELLO": "Hello",
+			"WORLD": "world",
+			"DESCRIPTION": "This is an example"
+		});
+
+		$scope.jsonGr = JSON.stringify({
+			"HELLO": "Γεια σου",
+			"WORLD": "κόσμε",
+			"DESCRIPTION": "Αυτο ειναι ενα παραδειγμα"
+		});
 
 		$scope.tryIt = function(){
 

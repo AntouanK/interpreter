@@ -10,56 +10,28 @@ var gulp             = require('gulp'),
     eslint           = require('gulp-eslint'),
     gulpFilter       = require('gulp-filter'),
     uglify           = require('gulp-uglify'),
-	through          = require('through2'),
-    log              = require('consologger'),
+	wrapper          = require('gulp-wrapper'),
     //    build target
-    buildPath = './',
+    buildPath = './gh-pages/',
     //	files paths
     lessFilesPath     = ['dev/style/main.less'],
     fontFilesPath     = ['dev/style/oxygen.300.woff'],
 	templateFilesPath = ['dev/templates/*.html'],
     jsFilesPaths      = [
-    	'dev/script/angular.min.js',
-    	'dev/script/angular-route.js',
-    	'dev/script/angular-animate.js',
-        'dev/script/main.js',
-        'dev/script/interpreter.js'
+    	'dev/script/thirdParty/angular.js',
+		'dev/script/thirdParty/*.js',
+		'dev/script/main.js',
+		'dev/script/interpreter.js',
+		'dev/script/directives/*.js',
+		'dev/script/services/*.js'
     ],
-    htmlFilesPath     = [
-    	'dev/index.html'
-    ];
+    htmlFilesPath     = ['dev/index.html'],
+	langFilesPath     = ['languages/*.json'];
+
 /////////////////////////////////////////////////
 var getFiles = function(filesPath){
     return gulp.src(filesPath);
 };
-
-var wrapScript = function(){
-
-	return through.obj(function (file, enc, callback) {
-
-		var fileName = file.path.replace(file.base,''),
-			//	set the new contents
-		    newContentString = '<script type="text/ng-template" id="' +
-		        fileName + '">' + '\n' +
-		        file.contents.toString() +
-		        '</script>',
-			//	make a new buffer
-			buf = new Buffer(newContentString);
-
-		//	change the file contents
-		file.contents = buf;
-		//	push the file into the output
-		this.push(file);
-		callback();
-	});
-};
-
-gulp.task('test', function(){
-
-	return gulp.src('templates.html')
-	.pipe(wrapScript())
-	.pipe(gulp.dest('new/'));
-});
 
 gulp.task('copyStyleFiles', function(){
 
@@ -76,6 +48,7 @@ gulp.task('lint', function(){
 
     var filter = gulpFilter([
         '!angular*',
+		'!bindonce.*'
     ]);
 
     getFiles(jsFilesPaths)
@@ -88,14 +61,17 @@ gulp.task('copyJsFiles', ['lint'], function(){
 
     getFiles(jsFilesPaths)
     .pipe(concat('main.js'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest(buildPath + 'script/'));
 });
 
 gulp.task('copyHtmlFiles', function(){
 
 	getFiles(templateFilesPath)
-	.pipe(wrapScript())
+	.pipe(wrapper({
+		header: '<script type="text/ng-template" id="${filename}">\n',
+		footer: '</script>\n'
+	}))
 	.pipe(concat('templates.html'))
 	.pipe(gulp.dest(buildPath));
 
@@ -105,10 +81,37 @@ gulp.task('copyHtmlFiles', function(){
 
 gulp.task('copyResourceFiles', function(){
 
-    getFiles('dev/languages/*')
+    getFiles(langFilesPath)
     .pipe(gulp.dest(buildPath + 'languages/'));
 });
 
-gulp.task('build', ['copyStyleFiles', 'copyJsFiles', 'copyHtmlFiles', 'copyResourceFiles'], function(){
+gulp.task('watcher', function(){
 
+	var pathsToWatch = lessFilesPath
+	                   .concat(jsFilesPaths)
+	                   .concat(htmlFilesPath)
+	                   .concat(templateFilesPath),
+	    onWatch = function(event) {
+			console.log('File '+event.path+' was '+event.type+', running tasks...');
+		}
+
+	console.log('watching : '+pathsToWatch.join('\n'));
+
+	gulp
+	.watch(['dev/style/*.less'], ['copyStyleFiles'])
+	.on('change', onWatch);
+
+	gulp
+	.watch(jsFilesPaths, ['copyJsFiles'])
+	.on('change', onWatch);
+
+	gulp
+	.watch(templateFilesPath.concat(htmlFilesPath), ['copyHtmlFiles'])
+	.on('change', onWatch);
+
+
+});
+
+gulp.task('build', ['watcher', 'copyStyleFiles', 'copyJsFiles', 'copyHtmlFiles', 'copyResourceFiles'], function(){
+	//	just ... build
 });

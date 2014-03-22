@@ -1,4 +1,5 @@
 {
 	"HELLO": "Hello",
-	"WORLD": "world"
+	"WORLD": "world",
+	"DESCRIPTION": "This is an example"
 }

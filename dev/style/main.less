@@ -1,4 +1,6 @@
 @import (less) './pure-min.css';
+@import './horMenu.less';
+@import './editor.less';
 
 @font-face {
 	font-family: 'Oxygen';
@@ -21,7 +23,7 @@ body {
 	height: 140px;
 }
 
-.content {
+#content-wrapper {
 	background: #333;
 	position: absolute;
 	bottom: 0;
@@ -29,34 +31,11 @@ body {
 	left: 0;
 	top: 236px;
 	padding-top: 50px;
+	overflow: auto;
 }
 
-.main-menu {
-	text-align: center;
-	background: #777;
-	height: 36px;
+#content {
 
-	-webkit-transition-duration: 300ms;
-	   -moz-transition-duration: 300ms;
-	        transition-duration: 300ms;
-
-	-webkit-transform-origin: top;
-	   -moz-transform-origin: top;
-	        transform-origin: top;
-}
-
-.main-menu.closed {
-	-webkit-transform: rotateX(-90deg);
-	   -moz-transform: rotateX(-90deg);
-	        transform: rotateX(-90deg);
-}
-
-.main-menu-wrapper {
-	background: #333;
-
-	-webkit-perspective: 1000px;
-	   -moz-perspective: 1000px;
-	        perspective: 1000px;
 }
 
 .splash-wrapper {
