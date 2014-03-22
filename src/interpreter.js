@@ -7,15 +7,16 @@
 	angular.module('myApp')	//	your app here
 	.service('interpreter', ['$http', function($http) {
 
-		var langDictionary = {},	// the main hash map we keep all our current translations
-		    langCache      = {},	// we cache here the different language dictionaries
-		    //	a function which does the rewrite of the new words whenever we get a new language
-		    replaceWords   = function(newLangData){
 
-		    	Object.keys(newLangData)
-		    	.every(function(key) {
-					
-		    		//	if property is read-only, unlock it
+		var langDictionary = {},
+			langCache = {},
+			currentLangCode = '',
+			replaceWords = function(newLangData){
+
+				Object.keys(newLangData)
+				.every(function(key){
+
+					//	if property is read-only, unlock it
 					if(langDictionary[key] !== undefined){
 						Object.defineProperty(langDictionary, key, { writable: true });
 					}
@@ -26,46 +27,86 @@
 					//	make keyword read only, no one should try to write on it ( will throw error if he does! )
 					Object.defineProperty(langDictionary, key, { writable: false });
 					return true;
-		    	});
-		    };
+				});
+			},
+			getLang = function(url, callback){
 
-		this.ignoreCache = false;	// we use the cache by default, but you can turn it off
+				if(typeof url !== 'string' || typeof callback !== 'function'){
+					return false;
+				}
 
-		this.setLang = function(url, callback) {
+				$http({
+					url: url
+				})
+				.error(function(data, status){
+					//	Handle the error here
+					//	console.log('error in getting '+langCode);
+				})
+				.success(function(data, status, headers, config){
+					callback(data);
+				});
+			};
 
-			if(typeof url !== 'string'){
-				return false;
-			}
+		//	pass a new dictionary and store it with a language code e.g. en-UK
+		this.addLang = function(langCode, newLangData, callback){
 
-			// check if the cache is available for this language code
-			if(langCache[url] !== undefined && !this.ignoreCache){
-				replaceWords(langCache[url]);
+			//	we assume newLangData is a JSON language dictionary
+			if(typeof newLangData === 'object'){
+
+				try {
+					JSON.parse(newLangData);
+				} catch (e){
+					throw 'bad JSON given as language data';
+				}
+
+				langCache[langCode] = newLangData;
 				return true;
 			}
 
-			$http({
-				url: url
-			})
-			.error(function(){
-				//	something went wrong in getting the file, handle it
-			})
-			.success(function(data/*, status, headers, config*/){
+			//	we assume newLangData is a url
+			if(typeof newLangData === 'string'){
 
-				//	we assume we get a json file, so `data` is the dictionary we expect
-				replaceWords(data);
-
-				//	cache the data
-				langCache[url] = data;
-
-				if(typeof callback === 'function'){
-					callback();	//	do something after the language is updated
+				if(langCache[langCode] !== undefined){
+					return false;
 				}
-			});
+
+				getLang(newLangData, function(data){
+
+					//	cache the language
+					langCache[langCode] = data;
+
+					if(typeof callback === 'function'){
+						callback();
+					}
+				});
+			}
 		};
 
-		//	expose the dictionary hashmap so you can bind on it
+		//	set a language as the active one, using it's langcode ( if the language is not in the cache,
+		//	we'll try to receive it from lang.langCode.json )
+		this.setLang = function(langCode, callback){
+
+			if(typeof langCode !== 'string'){
+				return false;
+			}
+
+			if(langCache[langCode] !== undefined){
+				console.log(langCache[langCode]);
+				replaceWords(langCache[langCode]);
+				currentLangCode = langCode;
+				return true;
+			}
+		};
+
+		this.getCurrentLang = function(){
+			return currentLangCode;
+		};
+
+		//	expose the dictionary so that every controller that uses the service can
+		//	bind directly onto te map, thus having real-time update when the map changes language
 		this.map = langDictionary;
 
+		return this;
 	}]);
 
 }());
