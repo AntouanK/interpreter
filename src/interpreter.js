@@ -7,7 +7,6 @@
 	angular.module('myApp')	//	your app here
 	.service('interpreter', ['$http', function($http) {
 
-
 		var langDictionary = {},
 			langCache = {},
 			currentLangCode = '',
