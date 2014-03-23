@@ -8,7 +8,7 @@ branches:
   only:
     - dev
 
-before_install: npm i -g gulp
+before_install: date
 
 install: npm i
 
@@ -20,4 +20,4 @@ env:
 global:
   - GH_REF: github.com/antouank/interpreter.git
   - GH_TOKEN: 38f3a0d7b719e5f8e388d10cff7b7449ded4e1f5
-  - date: date
+  - DATE: date
