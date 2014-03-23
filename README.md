@@ -26,15 +26,20 @@ can be
 * callback
   - `function` to call after task is done
 
-####setLang(langCode)
+####setLang(langCode[, callback])
 
 * langCode `string` the code of the language you want to load. You must first have loaded this language using `.addLang()`
+
+* callback `function` to call after task is done
 
 ####.getCurrentLang()
 
 * returns `string`
 (the langCode of the currently active language)
 
+----
+
+----
 
 ## LICENSE - "MIT License"
 
