@@ -8,14 +8,6 @@ branches:
 only:
   - dev
 
-before_install: npm i -g gulp
-
-install: npm i
-
-after_success:
-  - gulp build
-  - npm run-script deploy
-
 env:
   global:
     - GH_REF: github.com/antouank/interpreter.git
