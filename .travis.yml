@@ -1,14 +1,23 @@
-
 language: node_js
 
 node_js:
-    - "0.10"
+- "0.10"
 
 # whitelist
 branches:
-  only:
-    - dev
+only:
+- dev
+
+before_install: npm i -g gulp
+
+install: npm i
 
 after_success:
-    "gulp build"
-    "echo 1+1"
+- gulp build
+- npm run-script deploy
+
+env:
+global:
+	- GH_REF: github.com/antouank/interpreter.git
+	# GH_TOKEN
+	- secure: 38f3a0d7b719e5f8e388d10cff7b7449ded4e1f5
