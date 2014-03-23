@@ -5,8 +5,8 @@
  git config user.name "Travis-CI"
  git config user.email "travis@nodemeatspace.com"
  git add .
- git commit -m "Deployed to Github Pages"
- git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
+ git commit -m "Deployed to Github Pages @ ${date}"
+ git push -f -branch=gh-pages "https://${GH_TOKEN}@${GH_REF}" > /dev/null 2>&1
  echo done;
 )
 exit 0;
