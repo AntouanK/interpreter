@@ -18,13 +18,13 @@ var gulp             = require('gulp'),
     fontFilesPath     = ['dev/style/oxygen.300.woff'],
 	templateFilesPath = ['dev/templates/*.html'],
     jsFilesPaths      = [
-    	'dev/script/thirdParty/angular.js',
+		'dev/script/thirdParty/angular.js',
 		'dev/script/thirdParty/*.js',
 		'dev/script/main.js',
 		'dev/script/interpreter.js',
 		'dev/script/directives/*.js',
 		'dev/script/services/*.js'
-    ],
+	],
     htmlFilesPath     = ['dev/index.html'],
 	langFilesPath     = ['languages/*.json'];
 
@@ -113,6 +113,16 @@ gulp.task('watcher', function(){
 
 });
 
-gulp.task('build', ['watcher', 'copyStyleFiles', 'copyJsFiles', 'copyHtmlFiles', 'copyResourceFiles'], function(){
+gulp.task('build', ['copyStyleFiles', 'copyJsFiles', 'copyHtmlFiles', 'copyResourceFiles'], function(){
 	//	just ... build
+});
+
+gulp.task('buildDev', ['build', 'watcher'], function(){
+
+});
+
+gulp.task('test', function(){
+	console.log('test missing!');
+
+	return true;
 });
