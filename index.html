@@ -1,0 +1,62 @@
+<html ng-app="inApp">
+<head>
+	<title>interpreter.js - Angular.js i18n/l10n</title>
+	<link rel="stylesheet" href="style/main.css">
+</head>
+<body ng-controller="mainCtrl" ng-cloak>
+	<!-- header -->
+	<div class="header">
+		<h1>interpreter</h1>
+		<h2>i18n/l10n service for AngularJS</h2>
+	</div>
+
+	<!-- horizontal menu component -->
+	<hor-menu hor-menu-scope="menuScope"></hor-menu>
+
+	<!-- main content -->
+	<div id="content-wrapper">
+		<div id="content">
+
+			<!-- splash screen -->
+			<div class="splash-wrapper" ng-show="splash">
+				<div style='display: inline-block; margin: 10px;'>
+					<h2 ng-click="tryIt();">Try it</h2>
+				</div>
+				<div style='display: inline-block; margin: 10px;'>
+					<h2 ng-click="documentation();" style="opacity: 0.5;">See docs</h2>
+				</div>
+			</div>
+
+			<!-- try it view -->
+			<div class="mainView" ng-show="curActiveView === 'tryIt/setLang'">
+				<div class="pure-g">
+					<div class="pure-u-1-6" style="margin: auto 0;">
+						lang.en-UK.json
+					</div>
+			        <div class="pure-u-1-2">
+			            <editor content="jsonUk"></editor>
+			        </div>
+				</div>
+				<div class="pure-g">
+					<div class="pure-u-1-6" style="margin: auto 0;">
+						lang.el-GR.json
+					</div>
+			        <div class="pure-u-1-2">
+			            <editor content="jsonGr"></editor>
+			        </div>
+				</div>
+			</div>
+
+			<!-- see Code -->
+			<div class="mainView" ng-show="curActiveView === 'tryIt/seeCode'">
+				<div ng-include="'seeCode.html'">
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- scripts -->
+	<script type="text/javascript" src="script/main.js"></script>
+</body>
+</html>
