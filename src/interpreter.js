@@ -1,5 +1,6 @@
 /******************/
 /* interpreter.js */
+/*                */
 ;(function(){
 
 	'use strict';
@@ -7,9 +8,10 @@
 	angular.module('myApp')	//	your app here
 	.service('interpreter', ['$http', function($http) {
 
-		var langDictionary = {},
-			langCache = {},
-			currentLangCode = '',
+
+		var langDictionary = {},	//	our hash map dictionary
+			langCache = {},		//	cache different languages
+			currentLangCode = '',	//	the code of the currently used language
 			replaceWords = function(newLangData){
 
 				Object.keys(newLangData)
@@ -28,6 +30,9 @@
 					return true;
 				});
 			},
+			//	getLang will get a language file from the url you will provide
+			//	alternatively, if you already have your language JSON loaded in your app,
+			//	you can use addLang to inject it into the interpreter service
 			getLang = function(url, callback){
 
 				if(typeof url !== 'string' || typeof callback !== 'function'){
@@ -47,6 +52,8 @@
 			};
 
 		//	pass a new dictionary and store it with a language code e.g. en-UK
+		//	if newLangData is a JSON object, it will be used for dictionary
+		//	if newLangData is a URL string, interpreter will fetch the file for you
 		this.addLang = function(langCode, newLangData, callback){
 
 			//	we assume newLangData is a JSON language dictionary
@@ -81,8 +88,7 @@
 			}
 		};
 
-		//	set a language as the active one, using it's langcode ( if the language is not in the cache,
-		//	we'll try to receive it from lang.langCode.json )
+		//	set a language as the active one, using it's langcode
 		this.setLang = function(langCode, callback){
 
 			if(typeof langCode !== 'string'){
