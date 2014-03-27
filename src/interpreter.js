@@ -10,7 +10,7 @@
 
 
 		var langDictionary = {},	//	our hash map dictionary
-			langCache = {},		//	cache different languages
+			langCache = {},		//	cache of different languages
 			currentLangCode = '',	//	the code of the currently used language
 			replaceWords = function(newLangData){
 
