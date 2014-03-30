@@ -11,6 +11,8 @@ var gulp             = require('gulp'),
     gulpFilter       = require('gulp-filter'),
     uglify           = require('gulp-uglify'),
 	wrapper          = require('gulp-wrapper'),
+	replaceInFile    = require('./replaceInFile'),
+	rimraf           = require('rimraf'),
     //    build target
     buildPath = './gh-pages/',
     //	files paths
@@ -35,12 +37,12 @@ var getFiles = function(filesPath){
 
 gulp.task('copyStyleFiles', function(){
 
-    getFiles(lessFilesPath)
-    .pipe(less({ compress: true }))
-    .pipe(gulp.dest(buildPath + 'style/'));
+    // getFiles(lessFilesPath)
+    // .pipe(less({ compress: true }))
+    // .pipe(gulp.dest(buildPath + 'style/'));
 
-    getFiles(fontFilesPath)
-    .pipe(gulp.dest(buildPath + 'style/'));
+    // getFiles(fontFilesPath)
+    // .pipe(gulp.dest(buildPath + 'style/'));
 });
 
 //    lint JS files
@@ -76,7 +78,14 @@ gulp.task('copyHtmlFiles', function(){
 	.pipe(concat('templates.html'))
 	.pipe(gulp.dest(buildPath));
 
-	getFiles(htmlFilesPath)
+	//	merge the HTML and the CSS
+	es.merge(
+		getFiles(htmlFilesPath),
+
+		getFiles(lessFilesPath)
+		.pipe(less({ compress: true }))
+	)
+	.pipe(replaceInFile('main.css', 'index.html', '/*main.css*/'))
 	.pipe(gulp.dest(buildPath));
 });
 
@@ -111,6 +120,12 @@ gulp.task('watcher', function(){
 	.on('change', onWatch);
 
 
+});
+
+gulp.task('cleanTargetFolder', function(done){
+	rimraf(buildPath, function(){
+		done();
+	})
 });
 
 gulp.task('build', ['copyStyleFiles', 'copyJsFiles', 'copyHtmlFiles', 'copyResourceFiles'], function(){
