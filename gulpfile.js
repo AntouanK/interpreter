@@ -64,7 +64,7 @@ gulp.task('copyJsFiles', ['lint'], function(){
 
     getFiles(jsFilesPaths)
     .pipe(concat('main.js'))
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest(buildPath + 'script/'));
 });
 
