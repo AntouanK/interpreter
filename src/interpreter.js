@@ -96,7 +96,7 @@
 			}
 
 			if(langCache[langCode] !== undefined){
-				console.log(langCache[langCode]);
+
 				replaceWords(langCache[langCode]);
 				currentLangCode = langCode;
 				return true;
