@@ -1,7 +1,7 @@
 interpreter
 ===========
 
-An Angular service to used for i18n/l10n
+An Angular service to used for i18n/l10n ( IE9+ right now )
 
 > [WIP] website and API documentation
 >
